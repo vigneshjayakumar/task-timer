@@ -20,4 +20,8 @@ export class AppComponent {
   mainList() {
     this.router.navigate(['/Tasks'], { relativeTo: this.route });
   }
+
+  addNew() {
+    this.router.navigate(['/New-Task'], { relativeTo: this.route });
+  }
 }

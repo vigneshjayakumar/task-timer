@@ -5,6 +5,7 @@ import { TaskEditComponent } from './task-edit/task-edit.component';
 export const AppRoutes: Routes = [
   { path: 'Tasks', component: TaskListComponent },
   { path: 'edit/:id', component: TaskEditComponent },
+  { path: 'New-Task', component: TaskEditComponent },
   { path: '', redirectTo: 'Tasks', pathMatch: 'full' },
   { path: '**', redirectTo: 'Tasks' },
 ];
