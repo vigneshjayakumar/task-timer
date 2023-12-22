@@ -1,13 +1,18 @@
 <div class="card">
   <div class="card_details">
-    <div class="name"><h3>Weather-App</h3></div>
+    <div class="name">
+      <h3>{{ task.title }}</h3>
+    </div>
     <p class="desc">
-      App that Shows Current/Forecast Weather based on searched Location.
+      {{ task.desc }}
     </p>
-    <span class="tag target-time">Target Time: 48 Hrs</span
-    ><span class="tag time-taken">Time Taken: 2Hrs</span>
+    <span class="tag target-time"
+      >Target Time: {{ task.targetTimeInHrs }} Hrs</span
+    ><span class="tag time-taken"
+      >Time Taken: {{ task.takenTimeInHrs }} Hrs</span
+    >
     <div class="btn-container">
-      <p class="stop-watch ">0:0:0</p>
+      <p class="stop-watch">0:0:0</p>
       <button><i class="fa-regular fa-circle-play"></i></button>
       <button *ngIf="false"><i class="fa-regular fa-circle-pause"></i></button>
       <button><i class="fas fa-edit"></i></button>
