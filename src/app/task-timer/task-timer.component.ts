@@ -36,11 +36,11 @@ export class TaskTimerComponent {
 
     this.timer$ = timer(0, 1000).pipe(
       tap((s) => {
-        if (this.sec < 60 && this.isStart) {
+        if (this.sec < 59 && this.isStart) {
           this.sec = this.sec + 1;
-        } else if (this.sec >= 60) {
+        } else if (this.sec >= 59) {
           this.sec = this.sec % 60;
-          if (this.min < 60) {
+          if (this.min < 59) {
             this.min += 1;
             this.sec = 0;
             console.log('SEC', this.sec);
@@ -62,6 +62,11 @@ export class TaskTimerComponent {
 
   onPauseWatch() {
     this.isStart = false;
+    if (this.hr === 0) {
+      this.task.takenTimeInHrs = +(this.min / 100).toFixed(2);
+    } else {
+      this.task.takenTimeInHrs += +(this.min / 100).toFixed(2);
+    }
     // this.stop$.next(true);
   }
 }

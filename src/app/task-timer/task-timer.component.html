@@ -6,7 +6,7 @@
         <span class="tag target-time"
           >Target: {{ task.targetTimeInHrs }} Hrs</span
         ><span class="tag time-taken">Time: {{ task.takenTimeInHrs }} Hrs</span>
-        {{ timer$ | async }}
+        <span *ngIf="timer$ | async"></span>
       </div>
       <span class="btn-container">
         <p class="stop-watch">
