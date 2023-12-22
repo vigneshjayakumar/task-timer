@@ -6,11 +6,18 @@
         <span class="tag target-time"
           >Target: {{ task.targetTimeInHrs }} Hrs</span
         ><span class="tag time-taken">Time: {{ task.takenTimeInHrs }} Hrs</span>
+        {{ timer$ | async }}
       </div>
       <span class="btn-container">
-        <p class="stop-watch">0:0:0</p>
-        <button><i class="fa-regular fa-circle-play"></i></button>
-        <button *ngIf="false">
+        <p class="stop-watch">
+          {{ this.task.realTime?.HH }}:{{ this.task.realTime?.MM }}:{{
+            this.task.realTime?.SS
+          }}
+        </p>
+        <button (click)="onStartWatch()" *ngIf="!isStart">
+          <i class="fa-regular fa-circle-play"></i>
+        </button>
+        <button (click)="onPauseWatch()" *ngIf="isStart">
           <i class="fa-regular fa-circle-pause"></i>
         </button>
       </span>
