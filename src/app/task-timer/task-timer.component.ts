@@ -20,6 +20,7 @@ export class TaskTimerComponent {
   hr: number = 0;
 
   task: ITaskModel = {
+    id: 10,
     title: 'Weather App',
     desc: "Let's Roll",
     takenTimeInHrs: 48,

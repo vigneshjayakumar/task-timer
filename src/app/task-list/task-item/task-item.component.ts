@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ITaskModel } from '../task.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-item',
@@ -11,4 +12,10 @@ import { ITaskModel } from '../task.service';
 })
 export class TaskItemComponent {
   @Input() task!: ITaskModel;
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  selectTile(index: number) {
+    this.router.navigate(['/edit/', index], { relativeTo: this.route });
+  }
 }
