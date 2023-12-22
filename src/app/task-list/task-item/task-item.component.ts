@@ -9,5 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./task-item.component.css']
 })
 export class TaskItemComponent {
-
+  
 }
