@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 export interface ITaskModel {
@@ -43,9 +44,13 @@ export class TaskService {
       targetTimeInHrs: 48,
     },
   ];
-  constructor() {}
+  constructor(private http:HttpClient) {}
 
   getTaskList() {
     return [...this.taskLists];
+  }
+
+  postTaskList(){
+    
   }
 }
