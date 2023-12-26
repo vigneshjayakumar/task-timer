@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/internal/operators/tap';
 import { UserInfo } from '../userInfo.model';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface IAuthResponse {
   idToken: string;
@@ -18,9 +19,10 @@ export interface IAuthResponse {
 })
 export class AuthService {
   private API_KEY = `AIzaSyAxWH15bg49qMpLWTXDbvJBpDz9ssaLK9w`;
+  private logOutTimer: any;
   userLoginInfo = new BehaviorSubject<UserInfo>(null!);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   signUp(signUp: { email: string; password: string }) {
     return this.http
@@ -65,6 +67,48 @@ export class AuthService {
           console.log(LoginData);
         })
       );
+  }
+
+  logOut() {
+    this.userLoginInfo.next(null!);
+    localStorage.removeItem('UserInfo');
+    this.router.navigate(['/Login']);
+    if (this.logOutTimer) {
+      clearTimeout(this.logOutTimer);
+    }
+    this.logOutTimer = null;
+  }
+
+  autoLogIn() {
+    const userData: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(localStorage.getItem('UserInfo')!);
+    if (!userData) {
+      return;
+    }
+    const loadeduser = new UserInfo(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+
+    if (loadeduser.token) {
+      this.userLoginInfo.next(loadeduser);
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      this.autoLogOut(expirationDuration);
+    }
+  }
+
+  autoLogOut(expiresInDuration: number) {
+    this.logOutTimer = setTimeout(() => {
+      this.logOut();
+    }, expiresInDuration);
   }
 
   private handleAuthUserInfo(

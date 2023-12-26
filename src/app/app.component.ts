@@ -5,6 +5,7 @@ import { NgIf } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TaskService } from './task-list/task.service';
 import { tap } from 'rxjs/internal/operators/tap';
+import { AuthService } from './auth/login-component/service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +21,10 @@ export class AppComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private authService: AuthService
   ) {
+    this.authService.autoLogIn();
     this.taskService
       .getTaskListFromDB()
       .pipe(tap((s) => console.log(s)))
@@ -38,5 +41,9 @@ export class AppComponent {
 
   saveToDataBase() {
     this.taskService.saveTaskToDataBase().pipe(tap(console.log)).subscribe();
+  }
+
+  logOut() {
+    this.authService.logOut();
   }
 }

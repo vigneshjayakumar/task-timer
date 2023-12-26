@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/internal/operators/tap';
 
@@ -20,7 +20,18 @@ export interface ITaskModel {
 })
 export class TaskService {
   taskLists: ITaskModel[] = [];
+  header = {
+    headers: new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.getToken()._token
+    ),
+  };
+
   constructor(private http: HttpClient) {}
+
+  getToken() {
+    return JSON.parse(localStorage.getItem('UserInfo')!);
+  }
 
   getTaskList() {
     return [...this.taskLists];
