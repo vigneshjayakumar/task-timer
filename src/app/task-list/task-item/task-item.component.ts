@@ -18,4 +18,8 @@ export class TaskItemComponent {
   selectTile(index: number) {
     this.router.navigate(['/edit/', index], { relativeTo: this.route });
   }
+
+  runTile(index: number) {
+    this.router.navigate(['/start', index], { relativeTo: this.route });
+  }
 }

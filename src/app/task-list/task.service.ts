@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/internal/operators/tap';
 
 export interface ITaskModel {
   id: number;
@@ -18,40 +19,31 @@ export interface ITaskModel {
   providedIn: 'root',
 })
 export class TaskService {
-  taskLists: ITaskModel[] = [
-    {
-      id: 0,
-      title: 'Weather App',
-      desc: 'Shows Weather of Location Based on Search.',
-      takenTimeInHrs: 2,
-      targetTimeInHrs: 48,
-    },
-    {
-      id: 1,
-      title: 'TO-DO App',
-      desc: 'List of TO-DOs that client want to achieve.',
-      takenTimeInHrs: 1,
-      targetTimeInHrs: 56,
-    },
-    {
-      id: 2,
-      title: 'Weather App',
-      desc: 'Shows Weather of Location Based on Search.',
-      takenTimeInHrs: 2,
-      targetTimeInHrs: 48,
-    },
-    {
-      id: 3,
-      title: 'Weather App',
-      desc: 'Shows Weather of Location Based on Search.',
-      takenTimeInHrs: 2,
-      targetTimeInHrs: 48,
-    },
-  ];
+  taskLists: ITaskModel[] = [];
   constructor(private http: HttpClient) {}
 
   getTaskList() {
     return [...this.taskLists];
+  }
+
+  getOneTask(id: number) {
+    let taskFound = this.taskLists.findIndex((s) => s.id === id);
+    return this.taskLists[taskFound];
+  }
+
+  saveTaskToDataBase() {
+    return this.http.put(
+      `https://points-tracker-22d69-default-rtdb.asia-southeast1.firebasedatabase.app/tastTimer.json`,
+      this.taskLists
+    );
+  }
+
+  getTaskListFromDB() {
+    return this.http
+      .get<ITaskModel[]>(
+        `https://points-tracker-22d69-default-rtdb.asia-southeast1.firebasedatabase.app/tastTimer.json`
+      )
+      .pipe(tap((taskLists) => (this.taskLists = taskLists)));
   }
 
   addOneTaskTimer(task: {
@@ -69,6 +61,32 @@ export class TaskService {
     };
     this.taskLists.push(newTaskTimer);
     console.log(this.taskLists);
+    this.saveTaskToDataBase().subscribe();
+  }
+
+  replaceTask(
+    task: {
+      id: number;
+      title: string;
+      targetTime: number;
+      desc: string;
+      takenTimeInHrs: number;
+    },
+    id: number
+  ) {
+    let newTaskTimer: ITaskModel = {
+      title: task.title,
+      desc: task.desc,
+      id: task.id,
+      targetTimeInHrs: task.targetTime,
+      takenTimeInHrs: task.takenTimeInHrs,
+    };
+    let taskFound = this.taskLists.findIndex((task) => task.id === id);
+    if (taskFound !== null) {
+      this.taskLists[taskFound] = newTaskTimer;
+    }
+    console.log(this.taskLists);
+    this.saveTaskToDataBase().subscribe();
   }
 
   postTaskList() {}

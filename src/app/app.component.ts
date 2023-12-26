@@ -3,6 +3,8 @@ import { TaskListComponent } from './task-list/task-list.component';
 import { TaskTimerComponent } from './task-timer/task-timer.component';
 import { NgIf } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { TaskService } from './task-list/task.service';
+import { tap } from 'rxjs/internal/operators/tap';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,16 @@ export class AppComponent {
   isMenu: boolean = true;
   title = 'task-timer';
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private taskService: TaskService
+  ) {
+    this.taskService
+      .getTaskListFromDB()
+      .pipe(tap((s) => console.log(s)))
+      .subscribe();
+  }
 
   mainList() {
     this.router.navigate(['/Tasks'], { relativeTo: this.route });
@@ -23,5 +34,9 @@ export class AppComponent {
 
   addNew() {
     this.router.navigate(['/New-Task'], { relativeTo: this.route });
+  }
+
+  saveToDataBase() {
+    this.taskService.saveTaskToDataBase().pipe(tap(console.log)).subscribe();
   }
 }

@@ -1,27 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+
 import { TaskItemComponent } from './task-item/task-item.component';
 import { ITaskModel, TaskService } from './task.service';
-import { NgFor } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [TaskItemComponent, NgFor],
+  imports: [TaskItemComponent, CommonModule],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css'],
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent {
   taskLists: ITaskModel[] = [];
-  constructor(
-    private taskService: TaskService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private taskService: TaskService) {}
 
-  ngOnInit(): void {
-    this.taskLists = this.taskService.getTaskList();
-  }
-
- 
+  taskList$: Observable<ITaskModel[]> = this.taskService.getTaskListFromDB();
 }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ITaskModel } from '../task-list/task.service';
+import { ITaskModel, TaskService } from '../task-list/task.service';
 import { Observable, Subject, takeUntil, tap, timer } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-task-timer',
@@ -14,6 +15,7 @@ export class TaskTimerComponent {
   timer$!: Observable<number>;
   stop$ = new Subject<boolean>();
   isStart: boolean = false;
+  index!: number;
 
   min: number = 0;
   sec: number = 0;
@@ -21,16 +23,45 @@ export class TaskTimerComponent {
 
   task: ITaskModel = {
     id: 10,
-    title: 'Weather App',
-    desc: "Let's Roll",
-    takenTimeInHrs: 48,
-    targetTimeInHrs: 2,
+    title: '',
+    desc: '',
+    takenTimeInHrs: 0,
+    targetTimeInHrs: 0,
     realTime: {
       HH: this.hr,
       MM: this.min,
       SS: this.sec,
     },
   };
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private taskService: TaskService
+  ) {
+    this.activatedRoute.paramMap
+      .pipe(
+        tap((params) => {
+          this.index = +params.get('id')!;
+          if (this.index !== undefined) {
+            const taskOne: ITaskModel = this.taskService.getOneTask(this.index);
+            this.task = {
+              title: taskOne.title,
+              desc: taskOne.desc,
+              id: taskOne.id,
+              takenTimeInHrs: taskOne.takenTimeInHrs,
+              targetTimeInHrs: taskOne.targetTimeInHrs,
+              realTime: {
+                HH: taskOne.realTime?.HH ? taskOne.realTime?.HH : 0,
+                MM: taskOne.realTime?.MM ? taskOne.realTime?.MM : 0,
+                SS: taskOne.realTime?.SS ? taskOne.realTime?.SS : 0,
+              },
+            };
+            console.log(this.task, this.index, taskOne);
+          }
+        })
+      )
+      .subscribe();
+  }
 
   onStartWatch() {
     this.isStart = true;

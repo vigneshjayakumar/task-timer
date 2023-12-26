@@ -13,7 +13,9 @@
     >
     <div class="btn-container">
       <p class="stop-watch">0:0:0</p>
-      <button><i class="fa-regular fa-circle-play"></i></button>
+      <button (click)="runTile(task.id)">
+        <i class="fa-regular fa-circle-play"></i>
+      </button>
       <button *ngIf="false"><i class="fa-regular fa-circle-pause"></i></button>
       <button (click)="selectTile(task.id)"><i class="fas fa-edit"></i></button>
     </div>
