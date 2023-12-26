@@ -54,5 +54,22 @@ export class TaskService {
     return [...this.taskLists];
   }
 
+  addOneTaskTimer(task: {
+    id: number;
+    title: string;
+    targetTime: number;
+    desc: string;
+  }) {
+    let newTaskTimer: ITaskModel = {
+      title: task.title,
+      desc: task.desc,
+      id: task.id,
+      targetTimeInHrs: task.targetTime,
+      takenTimeInHrs: 0,
+    };
+    this.taskLists.push(newTaskTimer);
+    console.log(this.taskLists);
+  }
+
   postTaskList() {}
 }
