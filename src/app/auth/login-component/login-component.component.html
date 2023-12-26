@@ -1,0 +1,35 @@
+<div class="rows">
+  <form [formGroup]="loginForm" (ngSubmit)="submit()">
+    <div class="col-xs-12">
+      <label for="email" class="form-label">User-Email</label>
+      <input
+        type="text"
+        class="form-control"
+        id="email"
+        formControlName="email"
+      />
+    </div>
+
+    <div class="col-xs-12">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        formControlName="password"
+      />
+    </div>
+    <div class="col-xs-12">
+      <button class="btn btn-primary" type="submit" [disabled]="!this.loginForm.valid">
+        {{ isSignIn ? "SIGN-IN" : "Login-In" }}
+      </button>
+      <button
+        class="btn btn-secondary"
+        type="button"
+        (click)="isSignIn = !isSignIn"
+      >
+        {{ isSignIn ? "Switch-To-Login" : "Switch-To-SignIn" }}
+      </button>
+    </div>
+  </form>
+</div>
