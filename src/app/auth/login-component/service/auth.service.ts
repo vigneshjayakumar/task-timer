@@ -19,7 +19,7 @@ export interface IAuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private API_KEY = `AIzaSyAxWH15bg49qMpLWTXDbvJBpDz9ssaLK9w`;
+  private API_KEY = ``;
   private logOutTimer: any;
   userLoginInfo = new BehaviorSubject<UserInfo>(null!);
 
