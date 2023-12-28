@@ -6,9 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute,  Router } from '@angular/router';
+import { Subscription,  tap } from 'rxjs';
+
 import { ITaskModel, TaskService } from '../task-list/task.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Subscription, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-task-edit',
@@ -69,18 +70,17 @@ export class TaskEditComponent implements OnDestroy {
       return;
     }
 
-    const newTaskTimer: {
-      id: number;
-      title: string;
-      targetTime: number;
-      desc: string;
-      takenTimeInHrs: number;
-    } = {
+    const newTaskTimer: ITaskModel = {
       title: this.taskForm.controls['title'].value,
       desc: this.taskForm.controls['desc'].value,
       id: Math.floor(1000 + Math.random() * 9000),
-      targetTime: this.taskForm.controls['targetTime'].value,
+      targetTimeInHrs: this.taskForm.controls['targetTime'].value,
       takenTimeInHrs: this.isEdit ? this.editTask.takenTimeInHrs : 0,
+      realTime: {
+        HH: 0,
+        MM: 0,
+        SS: 0,
+      },
     };
     if (this.isEdit) {
       this.taskService.replaceTask(newTaskTimer, this.index);

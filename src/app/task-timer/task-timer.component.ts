@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ITaskModel, TaskService } from '../task-list/task.service';
 import { Observable, Subject, takeUntil, tap, timer } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+
+import { ITaskModel, TaskService } from '../task-list/task.service';
 
 @Component({
   selector: 'app-task-timer',
@@ -22,7 +23,7 @@ export class TaskTimerComponent {
   hr: number = 0;
 
   task: ITaskModel = {
-    id: 10,
+    id: 0,
     title: '',
     desc: '',
     takenTimeInHrs: 0,
@@ -44,6 +45,10 @@ export class TaskTimerComponent {
           this.index = +params.get('id')!;
           if (this.index !== undefined) {
             const taskOne: ITaskModel = this.taskService.getOneTask(this.index);
+            let hrMM = taskOne.takenTimeInHrs.toString().split('.');
+            console.log(hrMM);
+            this.hr =  isNaN(+hrMM[0]) ? 0 : +hrMM[0];
+            this.min = isNaN(+hrMM[1]) ? 0 : +hrMM[1];
             this.task = {
               title: taskOne.title,
               desc: taskOne.desc,
@@ -51,9 +56,9 @@ export class TaskTimerComponent {
               takenTimeInHrs: taskOne.takenTimeInHrs,
               targetTimeInHrs: taskOne.targetTimeInHrs,
               realTime: {
-                HH: taskOne.realTime?.HH ? taskOne.realTime?.HH : 0,
-                MM: taskOne.realTime?.MM ? taskOne.realTime?.MM : 0,
-                SS: taskOne.realTime?.SS ? taskOne.realTime?.SS : 0,
+                HH: this.hr,
+                MM: this.min,
+                SS: 0,
               },
             };
             console.log(this.task, this.index, taskOne);
@@ -99,6 +104,6 @@ export class TaskTimerComponent {
     } else {
       this.task.takenTimeInHrs += +(this.min / 100).toFixed(2);
     }
-    // this.stop$.next(true);
+    this.taskService.replaceTask(this.task, this.task.id);
   }
 }

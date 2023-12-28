@@ -10,8 +10,8 @@
       </div>
       <span class="btn-container">
         <p class="stop-watch">
-          {{ this.task.realTime?.HH }}:{{ this.task.realTime?.MM }}:{{
-            this.task.realTime?.SS
+          {{ this.task.realTime.HH }}:{{ this.task.realTime.MM }}:{{
+            this.task.realTime.SS
           }}
         </p>
         <button (click)="onStartWatch()" *ngIf="!isStart">

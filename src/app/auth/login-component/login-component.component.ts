@@ -6,10 +6,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from './service/auth.service';
 import { tap } from 'rxjs/internal/operators/tap';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+
+import { AuthService } from './service/auth.service';
 
 @Component({
   selector: 'app-login-component',

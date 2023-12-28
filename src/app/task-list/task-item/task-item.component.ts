@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ITaskModel } from '../task.service';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { ITaskModel } from '../task.service';
 
 @Component({
   selector: 'app-task-item',

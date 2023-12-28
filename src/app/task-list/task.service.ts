@@ -8,7 +8,7 @@ export interface ITaskModel {
   desc: string;
   targetTimeInHrs: number;
   takenTimeInHrs: number;
-  realTime?: {
+  realTime: {
     HH: number;
     MM: number;
     SS: number;
@@ -57,40 +57,36 @@ export class TaskService {
       .pipe(tap((taskLists) => (this.taskLists = taskLists)));
   }
 
-  addOneTaskTimer(task: {
-    id: number;
-    title: string;
-    targetTime: number;
-    desc: string;
-  }) {
+  addOneTaskTimer(task: ITaskModel) {
     let newTaskTimer: ITaskModel = {
       title: task.title,
       desc: task.desc,
       id: task.id,
-      targetTimeInHrs: task.targetTime,
+      targetTimeInHrs: task.targetTimeInHrs,
       takenTimeInHrs: 0,
+      realTime: {
+        HH: 0,
+        MM: 0,
+        SS: 0,
+      },
     };
     this.taskLists.push(newTaskTimer);
     console.log(this.taskLists);
     this.saveTaskToDataBase().subscribe();
   }
 
-  replaceTask(
-    task: {
-      id: number;
-      title: string;
-      targetTime: number;
-      desc: string;
-      takenTimeInHrs: number;
-    },
-    id: number
-  ) {
+  replaceTask(task: ITaskModel, id: number) {
     let newTaskTimer: ITaskModel = {
       title: task.title,
       desc: task.desc,
       id: task.id,
-      targetTimeInHrs: task.targetTime,
+      targetTimeInHrs: task.targetTimeInHrs,
       takenTimeInHrs: task.takenTimeInHrs,
+      realTime: {
+        HH: 0,
+        MM: 0,
+        SS: 0,
+      },
     };
     let taskFound = this.taskLists.findIndex((task) => task.id === id);
     if (taskFound !== null) {

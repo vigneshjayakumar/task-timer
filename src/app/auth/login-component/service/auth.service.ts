@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/internal/operators/tap';
-import { UserInfo } from '../userInfo.model';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+
+import { UserInfo } from '../userInfo.model';
 
 export interface IAuthResponse {
   idToken: string;
