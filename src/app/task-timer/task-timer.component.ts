@@ -46,8 +46,7 @@ export class TaskTimerComponent {
           if (this.index !== undefined) {
             const taskOne: ITaskModel = this.taskService.getOneTask(this.index);
             let hrMM = taskOne.takenTimeInHrs.toString().split('.');
-            console.log(hrMM);
-            this.hr =  isNaN(+hrMM[0]) ? 0 : +hrMM[0];
+            this.hr = isNaN(+hrMM[0]) ? 0 : +hrMM[0];
             this.min = isNaN(+hrMM[1]) ? 0 : +hrMM[1];
             this.task = {
               title: taskOne.title,
@@ -61,7 +60,6 @@ export class TaskTimerComponent {
                 SS: 0,
               },
             };
-            console.log(this.task, this.index, taskOne);
           }
         })
       )
@@ -80,7 +78,6 @@ export class TaskTimerComponent {
           if (this.min < 59) {
             this.min += 1;
             this.sec = 0;
-            console.log('SEC', this.sec);
           } else {
             this.hr += 1;
             this.min = 0;

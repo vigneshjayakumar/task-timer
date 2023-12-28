@@ -71,7 +71,6 @@ export class TaskService {
       },
     };
     this.taskLists.push(newTaskTimer);
-    console.log(this.taskLists);
     this.saveTaskToDataBase().subscribe();
   }
 
@@ -92,7 +91,6 @@ export class TaskService {
     if (taskFound !== null) {
       this.taskLists[taskFound] = newTaskTimer;
     }
-    console.log(this.taskLists);
     this.saveTaskToDataBase().subscribe();
   }
 

@@ -28,7 +28,6 @@ export class AppComponent {
     this.authService.autoLogIn();
     this.taskService
       .getTaskListFromDB()
-      .pipe(tap((s) => console.log(s)))
       .subscribe();
   }
 
@@ -41,7 +40,7 @@ export class AppComponent {
   }
 
   saveToDataBase() {
-    this.taskService.saveTaskToDataBase().pipe(tap(console.log)).subscribe();
+    this.taskService.saveTaskToDataBase().subscribe();
   }
 
   logOut() {

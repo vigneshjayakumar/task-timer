@@ -65,7 +65,6 @@ export class AuthService {
             LoginData.idToken,
             +LoginData.expiresIn
           );
-          console.log(LoginData);
         })
       );
   }

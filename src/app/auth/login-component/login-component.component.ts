@@ -45,7 +45,7 @@ export class LoginComponentComponent {
     } else {
       this.loginSUB = this.authService.login(signUp);
     }
-    this.loginSUB.pipe(tap(console.log)).subscribe((res) => {
+    this.loginSUB.subscribe((res) => {
       this.router.navigate(['']);
     });
     this.loginForm.reset();

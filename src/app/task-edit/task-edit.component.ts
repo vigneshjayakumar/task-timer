@@ -36,11 +36,9 @@ export class TaskEditComponent implements OnDestroy {
           if (params.get('id')) {
             this.index = +params.get('id')!;
           }
-          console.log(this.index);
           if (this.index !== undefined) {
             this.isEdit = true;
             this.editTask = this.taskService.getOneTask(this.index);
-            console.log(this.editTask);
           } else {
             this.isEdit = false;
           }
@@ -91,7 +89,6 @@ export class TaskEditComponent implements OnDestroy {
     this.taskService.addOneTaskTimer(newTaskTimer);
     this.saveTask = this.taskService.saveTaskToDataBase().subscribe();
     this.router.navigate([''], { relativeTo: this.activatedRoute });
-    console.log(this.taskForm.value);
   }
 
   ngOnDestroy(): void {
