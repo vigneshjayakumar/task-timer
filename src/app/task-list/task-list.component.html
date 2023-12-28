@@ -1,0 +1,3 @@
+<div class="container" *ngFor="let task of taskList$ | async; let i = index">
+  <app-task-item [task]="task"></app-task-item>
+</div>

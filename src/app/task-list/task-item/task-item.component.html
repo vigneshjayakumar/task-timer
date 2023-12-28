@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card_details">
+    <div class="name">
+      <h3>{{ task.title }}</h3>
+    </div>
+    <p class="desc">
+      {{ task.desc }}
+    </p>
+    <span class="tag target-time"
+      >Target Time: {{ task.targetTimeInHrs }} Hrs</span
+    ><span class="tag time-taken"
+      >Time Taken: {{ task.takenTimeInHrs }} Hrs</span
+    >
+    <div class="btn-container">
+      <p class="stop-watch">0:0:0</p>
+      <button (click)="runTile(task.id)">
+        <i class="fa-regular fa-circle-play"></i>
+      </button>
+      <button *ngIf="false"><i class="fa-regular fa-circle-pause"></i></button>
+      <button (click)="selectTile(task.id)"><i class="fas fa-edit"></i></button>
+    </div>
+  </div>
+</div>

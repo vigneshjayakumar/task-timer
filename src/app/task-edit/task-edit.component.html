@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="card">
+    <form [formGroup]="taskForm">
+      <div class="card_details">
+        <div class="name">
+          <label for="title">Title</label>
+          <input class="form-control" formControlName="title" id="title" />
+        </div>
+        <label for="desc" class="form-label">Description</label>
+        <input class="desc form-control" id="desc" formControlName="desc" />
+
+        <label for="targetTime" class="form-label">Target Time</label>
+        <input
+          class="tag target-time form-control"
+          id="targetTime"
+          formControlName="targetTime"
+        />
+        <div class="btn-container">
+          <button type="submit" (click)="submitTaskTime()">
+            <i class="fa-regular fa-floppy-disk"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
